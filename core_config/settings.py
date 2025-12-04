@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # --- Your Custom Apps (Day 2) ---
+    'users',    
+    'projects', 
 ]
 
 MIDDLEWARE = [
@@ -54,7 +58,8 @@ ROOT_URLCONF = 'core_config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        # DIRS setting modified to look for templates in the root 'templates' folder (Day 2)
+        'DIRS': [BASE_DIR / 'templates'], 
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -70,12 +75,16 @@ WSGI_APPLICATION = 'core_config.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-
+# Using PostgreSQL configuration (Day 2 / Refactor)
+# NOTE: Set your actual credentials locally via Environment Variables (DB_USER, DB_PASSWORD)
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'resource_tracker_db',      # <-- Set this to your PG database name
+        'USER': 'postgres',                   # <-- Set a default local user like 'postgres' or your system username
+        'PASSWORD': '',                       # <-- Keep blank for security (use local PG config or ENV variables)
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -115,3 +124,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Tells Django to look for static files in the top-level 'static' folder (Day 2)
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+# --- Custom User Model Setting (Day 3) ---
+AUTH_USER_MODEL = 'users.Employee'
