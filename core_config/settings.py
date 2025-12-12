@@ -85,6 +85,7 @@ DATABASES = {
         'PASSWORD': '',                       # <-- Keep blank for security (use local PG config or ENV variables)
         'HOST': 'localhost',
         'PORT': '5432',
+       'CONN_MAX_AGE': 0, # <--- ENSURE THIS IS PRESENT
     }
 }
 

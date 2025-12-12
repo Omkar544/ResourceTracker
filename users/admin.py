@@ -1,16 +1,18 @@
+# users/admin.py
 from django.contrib import admin
-# Import the necessary Admin class for custom users
-from django.contrib.auth.admin import UserAdmin 
-# Import get_user_model from the correct location
-from django.contrib.auth import get_user_model 
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth import get_user_model
 from .models import Employee
 
-# 1. Unregister the default User model using the correctly imported function
-try:
-    admin.site.unregister(get_user_model())
-except admin.sites.NotRegistered:
-    # Handle the case where the default user model might not be registered yet
-    pass
+# Get the default User model
+User = get_user_model()
 
-# 2. Register your Custom Employee model with the standard UserAdmin features
-admin.site.register(Employee, UserAdmin)
+# 1. Unregister the default User model if it exists in the Admin site
+if admin.site.is_registered(User):
+    admin.site.unregister(User)
+
+# 2. Register your Custom Employee model using the standard UserAdmin class
+@admin.register(Employee)
+class EmployeeAdmin(UserAdmin):
+    # This ensures your custom fields (if any) and the UserAdmin fields are used.
+    pass

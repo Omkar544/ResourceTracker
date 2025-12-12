@@ -1,6 +1,6 @@
+# projects/admin.py
 from django.contrib import admin
-# This import should now work correctly after models.py is fixed
-from .models import Client, Project 
+from .models import Client, Project
 
 # Register your models here.
 admin.site.register(Client)
