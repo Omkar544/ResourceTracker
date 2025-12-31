@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">Employee Dashboard</h1>
+
+    <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-green-500 mb-8">
+        <h2 class="text-xl font-semibold mb-4 text-gray-700">Quick Log: Submit Work Hours</h2>
+        <form method="POST" action="{% url 'log_time' %}" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {% csrf_token %}
+            
+            <select name="project" class="border p-2 rounded focus:ring-2 focus:ring-blue-500 outline-none" required>
+                <option value="" disabled selected>Select Project</option>
+                {% for project in projects %}
+                    <option value="{{ project.id }}">{{ project.name }}</option>
+                {% endfor %}
+            </select>
+
+            <input type="date" name="date" class="border p-2 rounded focus:ring-2 focus:ring-blue-500 outline-none" required>
+            
+            <input type="number" name="hours" step="0.5" placeholder="Hours (e.g. 5.5)" class="border p-2 rounded focus:ring-2 focus:ring-blue-500 outline-none" required>
+
+            <input type="text" name="description" placeholder="Work description..." class="border p-2 rounded focus:ring-2 focus:ring-blue-500 outline-none md:col-span-3">
+
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded font-bold hover:bg-blue-700 transition duration-200">
+                Submit Entry
+            </button>
+        </form>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-blue-500">
+            <h2 class="text-xl font-semibold mb-4">My Managed Projects</h2>
+            <ul class="divide-y divide-gray-200">
+                {% for project in projects %}
+                <li class="py-3 flex justify-between items-center">
+                    <span class="font-medium text-gray-700">{{ project.name }}</span>
+                    <span class="px-2 py-1 text-xs rounded bg-green-100 text-green-800 uppercase">{{ project.status }}</span>
+                </li>
+                {% empty %}
+                <p class="text-gray-500 italic">No projects assigned yet.</p>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-md border-t-4 border-purple-500">
+            <h2 class="text-xl font-semibold mb-4">Recent Timesheets</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="text-gray-400 text-xs uppercase border-b">
+                            <th class="pb-3">Date</th>
+                            <th class="pb-3">Hours</th>
+                            <th class="pb-3">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-600">
+                        {% for entry in recent_timesheets %}
+                        <tr class="hover:bg-gray-50">
+                            <td class="py-3 border-b text-sm">{{ entry.date }}</td>
+                            <td class="py-3 border-b">
+                                <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded-md font-bold">{{ entry.hours_worked }}</span>
+                            </td>
+                            <td class="py-3 border-b text-sm italic">{{ entry.description|default:"-" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

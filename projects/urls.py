@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # This maps the root path of the project to your test view
-    path('', views.test_config_view, name='test_home'),
+    path('', views.dashboard, name='dashboard'),
+    # ADD THIS LINE BELOW:
+    path('log-time/', views.log_time, name='log_time'),
 ]
