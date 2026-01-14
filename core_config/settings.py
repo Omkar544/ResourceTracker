@@ -133,3 +133,28 @@ STATICFILES_DIRS = [
 
 # --- Custom User Model Setting (Day 3) ---
 AUTH_USER_MODEL = 'users.Employee'
+
+
+# ... (Keep existing code above)
+
+# --- Static files (CSS, JavaScript, Images) ---
+STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+# --- Custom User Model Setting (Day 3) ---
+AUTH_USER_MODEL = 'users.Employee'
+
+# --- NEW: Authentication Redirect Settings (Fixes 404 Login Error) ---
+# After a user logs in, send them to the dashboard
+LOGIN_REDIRECT_URL = 'dashboard'
+
+# After a user logs out, send them back to the login page
+LOGOUT_REDIRECT_URL = 'login'
+
+# Tells @login_required decorators where the login page is located
+LOGIN_URL = 'login'
+
+# Default Primary Key Field
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
