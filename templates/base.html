@@ -12,7 +12,7 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#4338ca', // Indigo 700
+                        primary: '#4338ca', 
                     }
                 }
             }
@@ -33,6 +33,14 @@
             <nav class="flex items-center space-x-1 md:space-x-4">
                 {% if user.is_authenticated %}
                     <a class="px-3 py-2 rounded hover:bg-indigo-600 transition text-sm font-medium" href="{% url 'dashboard' %}">Dashboard</a>
+                    
+                    <a class="flex items-center px-3 py-2 rounded hover:bg-indigo-600 transition text-sm font-medium" href="{% url 'profile' %}">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        Profile
+                    </a>
+
                     <a class="px-3 py-2 rounded hover:bg-indigo-600 transition text-sm font-medium" href="{% url 'admin:index' %}">Admin</a>
                     
                     <form method="post" action="{% url 'logout' %}" class="inline">
@@ -60,7 +68,7 @@
         {% endif %}
 
         {% block content %}
-            {% endblock content %}
+        {% endblock content %}
     </main>
 
     <footer class="p-6 border-t border-gray-200 text-center text-gray-500 text-sm bg-white">
